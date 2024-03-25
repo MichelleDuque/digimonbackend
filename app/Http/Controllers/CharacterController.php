@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Book;
+use App\Models\Character;
 
 
-class BookController extends Controller {
+class CharacterController extends Controller {
     /**
      * Create a new controller instance.
      *
@@ -15,19 +15,24 @@ class BookController extends Controller {
      */
 
      public function getAll() {
-         //$books = Book::all();
+        $characters = Character::join('trainers', 'characters.trainer', '=', 'trainers.id')
+            ->join('evolutions', 'characters.evolution', '=', 'evolutions.id')
+            ->select('characters.id', 'fullname', 'photo', 'description', 'name', 'evolution_name', 'image')
+            ->get();
+    
+        return response()->json($characters);
+    }
 
-         $books = Book::join('authors', 'author_id', '=', 'authors.id')->select('books.id','title','published_date','name')->orderBy('published_date', 'desc')->get();
-
-
-         return response()->json($books);
-     }
-
-     public function getOne($id) {
-        $book = Book::join('authors', 'author_id', '=', 'authors.id')->select('books.id','title','book_image','published_date','name')->where('books.id', '=', $id)->get();
-
-         return response()->json($book);
-     }
+    public function getOne($id) {
+        $character = Character::join('trainers', 'characters.trainer', '=', 'trainers.id')
+            ->join('evolutions', 'characters.evolution', '=', 'evolutions.id')
+            ->select('characters.id', 'fullname', 'photo', 'description', 'name', 'evolution_name', 'image')
+            ->where('characters.id', '=', $id)
+            ->get();
+    
+        return response()->json($character);
+    }
+    
 
      public function save(Request $request) {
         $this->validate($request, [
