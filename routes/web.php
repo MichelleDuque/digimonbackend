@@ -21,9 +21,6 @@ $router->get('/', function () use ($router) {
 
 $router->get('/characters', 'CharacterController@getAll');
 $router->get('/characters/{id}', 'CharacterController@getOne');
-$router->post('/books/add', 'BookController@save');
-$router->post('/books/edit/{id}', 'BookController@update');
-$router->delete('/books/delete/{id}', 'BookController@delete');
 
 
 
