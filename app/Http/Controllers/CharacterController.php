@@ -67,6 +67,4 @@ class CharacterController extends Controller {
         return response()->json(null, 204);
     }
     
-    
-
 }
